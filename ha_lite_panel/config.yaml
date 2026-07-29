@@ -14,3 +14,4 @@ ports:
 webui: http://[HOST]:[PORT:8099]
 homeassistant_api: true
 hassio_api: true
+auth_api: true
