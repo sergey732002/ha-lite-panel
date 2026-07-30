@@ -4,8 +4,6 @@ echo "======================================"
 echo "Starting HA Lite Panel"
 echo "======================================"
 
-mkdir -p /panels
-mkdir -p /static
-mkdir -p /templates
+cd /ha_lite_panel
 
-exec python3 /app.py
+exec python3 app.py
