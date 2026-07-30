@@ -1,5 +1,12 @@
 from aiohttp import web
 
+import os
+import sys
+
+print("cwd =", os.getcwd())
+print("sys.path =", sys.path)
+print("files =", os.listdir("."))
+
 import asyncio
 import cache
 
