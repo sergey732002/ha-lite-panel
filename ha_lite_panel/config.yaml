@@ -1,5 +1,5 @@
 name: HA Lite Panel
-version: "0.1.1-alpha1"
+version: "0.1.5"
 slug: ha_lite_panel
 description: Lightweight HTML panel for old Android tablets
 
@@ -15,14 +15,13 @@ init: false
 ports:
   8099/tcp: 8099
 
-webui: "http://[HOST]:[PORT:8099]"
+webui: http://[HOST]:[PORT:8099]
 
 homeassistant_api: true
 hassio_api: true
 auth_api: true
 
 panel_icon: mdi:tablet-dashboard
-panel_title: HA Lite Panel
 
 options: {}
 
