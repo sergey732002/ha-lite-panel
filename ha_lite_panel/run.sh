@@ -4,6 +4,16 @@ echo "======================================"
 echo "Starting HA Lite Panel"
 echo "======================================"
 
-cd /ha_lite_panel
+pwd
 
-exec python3 app.py
+ls -la
+
+echo "-------------------------"
+
+find / -name app.py
+
+echo "-------------------------"
+
+find / -name entities.py
+
+sleep 600
