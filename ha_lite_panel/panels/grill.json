@@ -1,0 +1,27 @@
+[
+    {
+        "entity": "sensor.grill_temperature",
+        "title": "Камера",
+        "visible": true
+    },
+    {
+        "entity": "sensor.meat_probe_1",
+        "title": "Щуп 1",
+        "visible": true
+    },
+    {
+        "entity": "sensor.meat_probe_2",
+        "title": "Щуп 2",
+        "visible": true
+    },
+    {
+        "entity": "switch.fan",
+        "title": "Вентилятор",
+        "visible": true
+    },
+    {
+        "entity": "switch.auger",
+        "title": "Шнек",
+        "visible": true
+    }
+]

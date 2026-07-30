@@ -1,0 +1,12 @@
+[
+    {
+        "entity": "sensor.outdoor_temperature",
+        "title": "Улица",
+        "visible": true
+    },
+    {
+        "entity": "sensor.indoor_temperature",
+        "title": "Дом",
+        "visible": true
+    }
+]
