@@ -2,59 +2,8 @@
 
 var container = null;
 
-function addEntity(item) {
 
-    var row = document.createElement("div");
-
-    row.className = "row";
-
-    var title = document.createElement("div");
-
-    title.className = "title";
-
-    title.innerHTML =
-        item.name +
-        " (" +
-        item.entity +
-        ")";
-
-    row.appendChild(title);
-
-    var button = document.createElement("button");
-
-    button.innerHTML = "Добавить";
-
-    button.onclick = function () {
-
-        addToPanel(item);
-    };
-
-    row.appendChild(button);
-
-    container.appendChild(row);
-}
-
-function addToPanel(item) {
-
-    API.post(
-
-        "/api/config",
-
-        item,
-
-        function () {
-
-            alert("Сохранено");
-        }
-    );
-}
-
-window.onload = function () {
-
-    container =
-        document.getElementById(
-            "entities"
-        );
+function refresh() {
 
     API.get(
 
@@ -76,4 +25,127 @@ window.onload = function () {
             }
         }
     );
+}
+
+
+function addEntity(item) {
+
+    var row =
+        document.createElement(
+            "div"
+        );
+
+    row.className = "row";
+
+    var title =
+        document.createElement(
+            "div"
+        );
+
+    title.className = "title";
+
+    title.innerHTML =
+
+        item.name +
+
+        " (" +
+
+        item.entity +
+
+        ")";
+
+    row.appendChild(
+        title
+    );
+
+    var addButton =
+        document.createElement(
+            "button"
+        );
+
+    addButton.innerHTML =
+        "Добавить";
+
+    addButton.onclick = function () {
+
+        addToPanel(item);
+    };
+
+    row.appendChild(
+        addButton
+    );
+
+    var deleteButton =
+        document.createElement(
+            "button"
+        );
+
+    deleteButton.innerHTML =
+        "Удалить";
+
+    deleteButton.onclick = function () {
+
+        deleteFromPanel(item);
+    };
+
+    row.appendChild(
+        deleteButton
+    );
+
+    container.appendChild(
+        row
+    );
+}
+
+
+function addToPanel(item) {
+
+    API.post(
+
+        "/api/config",
+
+        item,
+
+        function () {
+
+            alert(
+                "Сохранено"
+            );
+        }
+    );
+}
+
+
+function deleteFromPanel(item) {
+
+    API.post(
+
+        "/api/delete",
+
+        {
+
+            entity:
+                item.entity
+
+        },
+
+        function () {
+
+            alert(
+                "Удалено"
+            );
+        }
+    );
+}
+
+
+window.onload = function () {
+
+    container =
+
+        document.getElementById(
+            "entities"
+        );
+
+    refresh();
 };
