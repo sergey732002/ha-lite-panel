@@ -28,6 +28,99 @@ function refresh() {
 }
 
 
+function moveUp(item) {
+
+    API.post(
+
+        "/api/move_up",
+
+        {
+            entity: item.entity
+        },
+
+        function () {
+
+            refresh();
+        }
+    );
+}
+
+
+function moveDown(item) {
+
+    API.post(
+
+        "/api/move_down",
+
+        {
+            entity: item.entity
+        },
+
+        function () {
+
+            refresh();
+        }
+    );
+}
+
+
+function addToPanel(item) {
+
+    API.post(
+
+        "/api/config",
+
+        item,
+
+        function () {
+
+            refresh();
+        }
+    );
+}
+
+
+function deleteFromPanel(item) {
+
+    API.post(
+
+        "/api/delete",
+
+        {
+            entity: item.entity
+        },
+
+        function () {
+
+            refresh();
+        }
+    );
+}
+
+
+function addButton(
+    row,
+    text,
+    callback
+) {
+
+    var button =
+        document.createElement(
+            "button"
+        );
+
+    button.innerHTML =
+        text;
+
+    button.onclick =
+        callback;
+
+    row.appendChild(
+        button
+    );
+}
+
+
 function addEntity(item) {
 
     var row =
@@ -35,14 +128,16 @@ function addEntity(item) {
             "div"
         );
 
-    row.className = "row";
+    row.className =
+        "row";
 
     var title =
         document.createElement(
             "div"
         );
 
-    title.className = "title";
+    title.className =
+        "title";
 
     title.innerHTML =
 
@@ -58,83 +153,49 @@ function addEntity(item) {
         title
     );
 
-    var addButton =
-        document.createElement(
-            "button"
+    if (item.added) {
+
+        addButton(
+            row,
+            "▲",
+            function () {
+
+                moveUp(item);
+            }
         );
 
-    addButton.innerHTML =
-        "Добавить";
+        addButton(
+            row,
+            "▼",
+            function () {
 
-    addButton.onclick = function () {
-
-        addToPanel(item);
-    };
-
-    row.appendChild(
-        addButton
-    );
-
-    var deleteButton =
-        document.createElement(
-            "button"
+                moveDown(item);
+            }
         );
 
-    deleteButton.innerHTML =
-        "Удалить";
+        addButton(
+            row,
+            "✖",
+            function () {
 
-    deleteButton.onclick = function () {
+                deleteFromPanel(item);
+            }
+        );
+    }
+    else {
 
-        deleteFromPanel(item);
-    };
+        addButton(
+            row,
+            "Добавить",
+            function () {
 
-    row.appendChild(
-        deleteButton
-    );
+                addToPanel(item);
+            }
+        );
+    }
 
     container.appendChild(
         row
-    );
-}
-
-
-function addToPanel(item) {
-
-    API.post(
-
-        "/api/config",
-
-        item,
-
-        function () {
-
-            alert(
-                "Сохранено"
-            );
-        }
-    );
-}
-
-
-function deleteFromPanel(item) {
-
-    API.post(
-
-        "/api/delete",
-
-        {
-
-            entity:
-                item.entity
-
-        },
-
-        function () {
-
-            alert(
-                "Удалено"
-            );
-        }
     );
 }
 
