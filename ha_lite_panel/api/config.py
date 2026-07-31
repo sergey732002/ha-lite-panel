@@ -27,19 +27,66 @@ async def save_config(request):
 
     config = ha.load_panel(panel)
 
-    config.append({
+    entity = data["entity"]
 
-        "entity": data["entity"],
+    exists = False
 
-        "title": data["name"],
+    for item in config:
 
-        "visible": True
+        if item.get("entity") == entity:
 
-    })
+            exists = True
+
+            break
+
+    if not exists:
+
+        config.append({
+
+            "entity": entity,
+
+            "title": data["name"],
+
+            "visible": True
+
+        })
+
+        ha.save_panel(
+            panel,
+            config
+        )
+
+    return web.json_response(
+        {
+            "success": True
+        }
+    )
+
+
+async def delete_config(request):
+
+    data = await request.json()
+
+    panel = data.get(
+        "panel",
+        settings.DEFAULT_PANEL
+    )
+
+    entity = data.get("entity")
+
+    config = ha.load_panel(panel)
+
+    result = []
+
+    for item in config:
+
+        if item.get("entity") != entity:
+
+            result.append(item)
 
     ha.save_panel(
         panel,
-        config
+        result
     )
 
     return web.json_response(
