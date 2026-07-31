@@ -94,3 +94,77 @@ async def delete_config(request):
             "success": True
         }
     )
+
+
+async def move_up(request):
+
+    data = await request.json()
+
+    panel = data.get(
+        "panel",
+        settings.DEFAULT_PANEL
+    )
+
+    entity = data.get("entity")
+
+    config = ha.load_panel(panel)
+
+    for i in range(1, len(config)):
+
+        if config[i]["entity"] == entity:
+
+            config[i - 1], config[i] = (
+                config[i],
+                config[i - 1]
+            )
+
+            break
+
+    ha.save_panel(
+        panel,
+        config
+    )
+
+    return web.json_response(
+        {
+            "success": True
+        }
+    )
+
+
+async def move_down(request):
+
+    data = await request.json()
+
+    panel = data.get(
+        "panel",
+        settings.DEFAULT_PANEL
+    )
+
+    entity = data.get("entity")
+
+    config = ha.load_panel(panel)
+
+    for i in range(
+        len(config) - 1
+    ):
+
+        if config[i]["entity"] == entity:
+
+            config[i], config[i + 1] = (
+                config[i + 1],
+                config[i]
+            )
+
+            break
+
+    ha.save_panel(
+        panel,
+        config
+    )
+
+    return web.json_response(
+        {
+            "success": True
+        }
+    )
