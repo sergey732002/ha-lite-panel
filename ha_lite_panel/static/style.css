@@ -4,60 +4,28 @@ body {
     padding: 0;
 }
 
+
 body {
-    background: #202020;
-    color: #ffffff;
+
+    background: #f0f0f0;
+
+    color: #222222;
+
     font-family: Arial, sans-serif;
-    font-size: 20px;
+
+    font-size: 16px;
 }
 
-#panel {
-    padding: 10px;
+
+/* ---------- HEADER ---------- */
+
+
+#header {
+
+    padding: 8px;
+
 }
 
-.row {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    min-height: 64px;
-
-    padding: 12px;
-
-    margin-bottom: 6px;
-
-    border-radius: 8px;
-
-    background: #303030;
-}
-
-.title {
-    flex: 1;
-    font-weight: bold;
-}
-
-.value {
-    color: #cccccc;
-    margin-left: 20px;
-}
-
-button {
-    min-width: 140px;
-
-    min-height: 48px;
-
-    border: none;
-
-    border-radius: 6px;
-
-    background: #505050;
-
-    color: #ffffff;
-
-    font-size: 18px;
-}
 
 .header-card {
 
@@ -69,18 +37,200 @@ button {
 
     gap: 50px;
 
+
     min-height: 60px;
 
-    margin-bottom: 8px;
 
     border-radius: 8px;
 
+
     background: #ffffff;
+
 
     border: 1px solid #dddddd;
 
+
+    color: #222222;
+
+
     font-size: 32px;
 
+
     font-weight: bold;
+
+
+    margin-bottom: 8px;
+
+}
+
+
+
+/* ---------- PANEL ---------- */
+
+
+#panel {
+
+    padding: 8px;
+
+
+    display: grid;
+
+
+    grid-template-columns: repeat(2, 1fr);
+
+
+    gap: 8px;
+
+}
+
+
+
+/* ---------- CARDS ---------- */
+
+
+.row {
+
+    display: flex;
+
+
+    flex-direction: column;
+
+
+    justify-content: center;
+
+
+    align-items: center;
+
+
+    min-height: 90px;
+
+
+    padding: 8px;
+
+
+    margin: 0;
+
+
+    border-radius: 8px;
+
+
+    background: #ffffff;
+
+
+    border: 1px solid #dddddd;
+
+}
+
+
+/* ---------- TITLE ---------- */
+
+
+.title {
+
+    width: 100%;
+
+
+    text-align: center;
+
+
+    font-weight: bold;
+
+
+    margin-bottom: 8px;
+
+}
+
+
+/* ---------- VALUE ---------- */
+
+
+.value {
+
+    color: #666666;
+
+
+    font-size: 18px;
+
+}
+
+
+
+/* ---------- BUTTONS ---------- */
+
+
+button {
+
+    min-width: 80px;
+
+
+    min-height: 42px;
+
+
+    padding: 4px 10px;
+
+
+    border-radius: 6px;
+
+
+    border: 1px solid #cccccc;
+
+
+    background: #e8e8e8;
+
+
+    color: #222222;
+
+
+    font-size: 16px;
+
+}
+
+
+
+button:active {
+
+    background: #d0d0d0;
+
+}
+
+
+
+/* ---------- MEDIA PLAYER ---------- */
+
+
+.media-player {
+
+    grid-column: span 2;
+
+}
+
+
+/* ---------- SMALL SCREENS ---------- */
+
+
+@media (max-width: 600px) {
+
+
+    #panel {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .media-player {
+
+        grid-column: span 1;
+
+    }
+
+
+    .header-card {
+
+        font-size: 26px;
+
+        gap: 25px;
+
+    }
 
 }
