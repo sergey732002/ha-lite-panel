@@ -64,6 +64,41 @@ function moveDown(item) {
 }
 
 
+function renameEntity(item) {
+
+    var title = prompt(
+
+        "Введите новое название",
+
+        item.name
+
+    );
+
+    if (
+        title === null ||
+        title === ""
+    ) {
+
+        return;
+    }
+
+    API.post(
+
+        "/api/rename",
+
+        {
+            entity: item.entity,
+            title: title
+        },
+
+        function () {
+
+            refresh();
+        }
+    );
+}
+
+
 function addToPanel(item) {
 
     API.post(
@@ -170,6 +205,15 @@ function addEntity(item) {
             function () {
 
                 moveDown(item);
+            }
+        );
+
+        addButton(
+            row,
+            "✎",
+            function () {
+
+                renameEntity(item);
             }
         );
 
