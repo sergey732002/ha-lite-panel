@@ -1,32 +1,79 @@
-from aiohttp import web
-
-import cache
-import settings
+"use strict";
 
 
-async def header(request):
+function updateHeader() {
 
-    states = cache.get_all()
+    var header =
+        document.getElementById(
+            "header"
+        );
 
-    temperature = None
 
-    entity = settings.WEATHER_ENTITY
+    var now = new Date();
 
-    if entity in states:
 
-        data = states[entity]
+    var time =
+        now.toLocaleTimeString(
+            [],
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
 
-        attributes = data.get(
-            "attributes",
-            {}
-        )
 
-        temperature = attributes.get(
-            "temperature"
-        )
+    API.get(
 
-    return web.json_response({
+        "/api/header",
 
-        "temperature": temperature
+        function(data) {
 
-    })
+            var temp = "";
+
+            if (
+                data.temperature !== null &&
+                data.temperature !== undefined
+            ) {
+
+                temp =
+                    "🌡 " +
+                    data.temperature.toFixed(1) +
+                    "°C";
+
+            }
+
+
+            header.innerHTML =
+
+                '<div class="header-card">' +
+
+                '<span>🕒 ' +
+                time +
+                '</span>' +
+
+                '<span>' +
+                temp +
+                '</span>' +
+
+                '</div>';
+
+        }
+    );
+}
+
+
+
+window.addEventListener(
+    "load",
+    function() {
+
+        updateHeader();
+
+
+        setInterval(
+            updateHeader,
+            5000
+        );
+
+    }
+);
