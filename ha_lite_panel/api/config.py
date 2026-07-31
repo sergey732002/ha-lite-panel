@@ -36,7 +36,6 @@ async def save_config(request):
         if item.get("entity") == entity:
 
             exists = True
-
             break
 
     if not exists:
@@ -156,6 +155,40 @@ async def move_down(request):
                 config[i]
             )
 
+            break
+
+    ha.save_panel(
+        panel,
+        config
+    )
+
+    return web.json_response(
+        {
+            "success": True
+        }
+    )
+
+
+async def rename_entity(request):
+
+    data = await request.json()
+
+    panel = data.get(
+        "panel",
+        settings.DEFAULT_PANEL
+    )
+
+    entity = data.get("entity")
+
+    title = data.get("title")
+
+    config = ha.load_panel(panel)
+
+    for item in config:
+
+        if item.get("entity") == entity:
+
+            item["title"] = title
             break
 
     ha.save_panel(
