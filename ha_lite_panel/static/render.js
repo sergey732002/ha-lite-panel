@@ -10,10 +10,9 @@ var Render = {
         switch: "🔌",
         light: "💡",
         fan: "🌀",
-        cover: "🚪",
-        climate: "❄",
         media_player: "🎵"
     },
+
 
     init: function () {
 
@@ -21,21 +20,36 @@ var Render = {
             document.getElementById(
                 "panel"
             );
+
     },
 
-    action: function (entity, action) {
+
+    action: function (
+        entity,
+        action
+    ) {
 
         API.post(
+
             "/api/service",
+
             {
                 entity: entity,
                 action: action
             },
+
             function () {
-                setTimeout(loadPanel, 500);
+
+                setTimeout(
+                    loadPanel,
+                    500
+                );
+
             }
         );
+
     },
+
 
     addButton: function (
         row,
@@ -45,9 +59,14 @@ var Render = {
     ) {
 
         var button =
-            document.createElement("button");
+            document.createElement(
+                "button"
+            );
 
-        button.innerHTML = text;
+
+        button.innerHTML =
+            text;
+
 
         button.onclick = function () {
 
@@ -55,10 +74,16 @@ var Render = {
                 entity,
                 action
             );
+
         };
 
-        row.appendChild(button);
+
+        row.appendChild(
+            button
+        );
+
     },
+
 
     renderValue: function (
         row,
@@ -66,65 +91,161 @@ var Render = {
     ) {
 
         var value =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        value.className = "value";
+
+        value.className =
+            "value";
+
 
         value.innerHTML =
             item.state +
             " " +
-            item.unit;
+            (item.unit || "");
 
-        row.appendChild(value);
+
+        row.appendChild(
+            value
+        );
+
     },
 
-    render: function (items) {
 
-        this.container.innerHTML = "";
+    renderMediaPlayer: function (
+        row,
+        item
+    ) {
 
-        for (var i = 0; i < items.length; i++) {
+        row.className +=
+            " media-player";
 
-            var item = items[i];
+
+        var state =
+            document.createElement(
+                "div"
+            );
+
+
+        state.className =
+            "value";
+
+
+        state.innerHTML =
+            item.state;
+
+
+        row.appendChild(
+            state
+        );
+
+
+        this.addButton(
+            row,
+            "▶",
+            item.entity,
+            "play"
+        );
+
+
+        this.addButton(
+            row,
+            "⏸",
+            item.entity,
+            "pause"
+        );
+
+
+        this.addButton(
+            row,
+            "■",
+            item.entity,
+            "stop"
+        );
+
+    },
+
+
+    render: function (
+        items
+    ) {
+
+        this.container.innerHTML =
+            "";
+
+
+        for (
+            var i = 0;
+            i < items.length;
+            i++
+        ) {
+
+
+            var item =
+                items[i];
+
 
             if (!item.visible) {
+
                 continue;
+
             }
+
 
             var row =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
-            row.className = "row";
 
-            if (
-                item.state === "on" ||
-                item.state === "open"
-            ) {
-                row.className += " active";
-            }
+            row.className =
+                "row";
+
+
 
             var title =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
-            title.className = "title";
+
+            title.className =
+                "title";
+
 
             var icon =
-                this.icons[item.domain] || "⚙";
+                this.icons[item.domain]
+                ||
+                "⚙";
+
 
             title.innerHTML =
-                icon + " " + item.title;
+                icon +
+                " " +
+                item.title;
 
-            row.appendChild(title);
+
+            row.appendChild(
+                title
+            );
+
+
 
             if (
                 item.domain === "sensor" ||
                 item.domain === "binary_sensor"
             ) {
 
+
                 this.renderValue(
                     row,
                     item
                 );
+
+
             }
+
 
             if (
                 item.domain === "switch" ||
@@ -132,53 +253,38 @@ var Render = {
                 item.domain === "fan"
             ) {
 
+
                 this.addButton(
                     row,
                     item.state,
                     item.entity,
                     "toggle"
                 );
+
+
             }
 
-            if (
-                item.domain === "cover"
-            ) {
-
-                this.addButton(
-                    row,
-                    "▲",
-                    item.entity,
-                    "open"
-                );
-
-                this.addButton(
-                    row,
-                    "■",
-                    item.entity,
-                    "stop"
-                );
-
-                this.addButton(
-                    row,
-                    "▼",
-                    item.entity,
-                    "close"
-                );
-            }
 
             if (
-                item.domain === "climate"
+                item.domain === "media_player"
             ) {
 
-                this.renderValue(
+
+                this.renderMediaPlayer(
                     row,
                     item
                 );
+
+
             }
+
 
             this.container.appendChild(
                 row
             );
+
         }
+
     }
+
 };
