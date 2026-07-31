@@ -12,6 +12,64 @@ var Render = {
             );
     },
 
+    action: function (entity, action) {
+
+        API.post(
+
+            "/api/service",
+
+            {
+                entity: entity,
+                action: action
+            },
+
+            function () {
+
+                setTimeout(
+                    loadPanel,
+                    500
+                );
+            }
+        );
+    },
+
+    renderButton: function (row, item) {
+
+        var button =
+            document.createElement(
+                "button"
+            );
+
+        button.innerHTML = "Переключить";
+
+        button.onclick = function () {
+
+            Render.action(
+                item.entity,
+                "toggle"
+            );
+        };
+
+        row.appendChild(button);
+    },
+
+    renderValue: function (row, item) {
+
+        var value =
+            document.createElement(
+                "div"
+            );
+
+        value.className = "value";
+
+        value.innerHTML =
+            item.state +
+            " " +
+            item.unit;
+
+        row.appendChild(value);
+    },
+
     render: function (items) {
 
         this.container.innerHTML = "";
@@ -24,28 +82,47 @@ var Render = {
                 continue;
             }
 
-            var row = document.createElement("div");
+            var row =
+                document.createElement(
+                    "div"
+                );
 
             row.className = "row";
 
-            var title = document.createElement("div");
+            var title =
+                document.createElement(
+                    "div"
+                );
 
             title.className = "title";
 
-            title.innerHTML = item.title;
+            title.innerHTML =
+                item.title;
 
             row.appendChild(title);
 
-            var value = document.createElement("div");
+            if (
+                item.domain === "light" ||
+                item.domain === "switch" ||
+                item.domain === "fan"
+            ) {
 
-            value.className = "value";
+                this.renderButton(
+                    row,
+                    item
+                );
 
-            value.innerHTML =
-                item.state + " " + item.unit;
+            } else {
 
-            row.appendChild(value);
+                this.renderValue(
+                    row,
+                    item
+                );
+            }
 
-            this.container.appendChild(row);
+            this.container.appendChild(
+                row
+            );
         }
     }
 };
