@@ -13,7 +13,8 @@ from api.config import (
     save_config,
     delete_config,
     move_up,
-    move_down
+    move_down,
+    rename_entity
 )
 
 from web.index import index
@@ -83,6 +84,11 @@ app.router.add_post(
 app.router.add_post(
     "/api/move_down",
     move_down
+)
+
+app.router.add_post(
+    "/api/rename",
+    rename_entity
 )
 
 
