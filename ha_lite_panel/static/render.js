@@ -1,6 +1,8 @@
 "use strict";
 
+
 var Render = {
+
 
     container: null,
 
@@ -22,6 +24,7 @@ var Render = {
     },
 
 
+
     init: function () {
 
         this.container =
@@ -32,11 +35,13 @@ var Render = {
     },
 
 
+
     action: function (
         entity,
         action,
         extra
     ) {
+
 
         var data = {
 
@@ -57,6 +62,7 @@ var Render = {
         }
 
 
+
         API.post(
 
             "/api/service",
@@ -66,8 +72,11 @@ var Render = {
             function () {
 
                 setTimeout(
+
                     loadPanel,
+
                     500
+
                 );
 
             }
@@ -77,12 +86,15 @@ var Render = {
     },
 
 
+
     addButton: function (
         row,
         text,
         entity,
-        action
+        action,
+        extra
     ) {
+
 
         var button =
             document.createElement(
@@ -94,14 +106,23 @@ var Render = {
             text;
 
 
+
         button.onclick = function () {
 
+
             Render.action(
+
                 entity,
-                action
+
+                action,
+
+                extra
+
             );
 
+
         };
+
 
 
         row.appendChild(
@@ -111,10 +132,12 @@ var Render = {
     },
 
 
+
     renderValue: function (
         row,
         item
     ) {
+
 
         var value =
             document.createElement(
@@ -127,9 +150,13 @@ var Render = {
 
 
         value.innerHTML =
+
             item.state +
+
             " " +
+
             (item.unit || "");
+
 
 
         row.appendChild(
@@ -137,6 +164,7 @@ var Render = {
         );
 
     },
+
 
 
     renderMediaPlayer: function (
@@ -164,114 +192,94 @@ var Render = {
             item.state;
 
 
+
         row.appendChild(
             state
         );
 
 
 
-        this.addButton(
+        var playAction =
 
-            row,
+            item.state === "playing"
 
-            "▶",
+            ? "pause"
 
-            item.entity,
+            : "play";
 
-            "play"
-
-        );
-
-
-        this.addButton(
-
-            row,
-
-            "⏸",
-
-            item.entity,
-
-            "pause"
-
-        );
 
 
         this.addButton(
 
             row,
 
-            "■",
+            "▶⏸",
 
             item.entity,
 
-            "stop"
+            playAction
 
         );
 
 
 
-        var volume =
-            document.createElement(
-                "input"
-            );
+        this.addButton(
 
+            row,
 
-        volume.type =
-            "range";
+            "▶▶",
 
+            item.entity,
 
-        volume.min =
-            "0";
+            "next"
 
-
-        volume.max =
-            "1";
-
-
-        volume.step =
-            "0.01";
-
-
-        volume.value =
-            item.volume || 0;
+        );
 
 
 
-        volume.className =
-            "volume-slider";
+        this.addButton(
+
+            row,
+
+            "🔉",
+
+            item.entity,
+
+            "volume_down",
+
+            {
+
+                volume:
+                    item.volume
+
+            }
+
+        );
 
 
 
-        volume.onchange = function () {
+        this.addButton(
 
+            row,
 
-            Render.action(
+            "🔊",
 
-                item.entity,
+            item.entity,
 
-                "volume_set",
+            "volume_up",
 
-                {
+            {
 
-                    volume:
-                        parseFloat(
-                            volume.value
-                        )
+                volume:
+                    item.volume
 
-                }
+            }
 
-            );
-
-
-        };
-
-
-        row.appendChild(
-            volume
         );
 
 
     },
+
 
 
     render: function (
@@ -310,6 +318,7 @@ var Render = {
                 );
 
 
+
             row.className =
                 "row";
 
@@ -319,6 +328,7 @@ var Render = {
                 document.createElement(
                     "div"
                 );
+
 
 
             title.className =
@@ -334,8 +344,11 @@ var Render = {
 
 
             title.innerHTML =
+
                 icon +
+
                 " " +
+
                 item.title;
 
 
@@ -343,6 +356,7 @@ var Render = {
             row.appendChild(
                 title
             );
+
 
 
 
@@ -358,12 +372,16 @@ var Render = {
 
 
                 this.renderValue(
+
                     row,
+
                     item
+
                 );
 
 
             }
+
 
 
 
@@ -396,6 +414,8 @@ var Render = {
 
 
             }
+
+
 
 
 
