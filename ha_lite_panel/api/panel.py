@@ -16,26 +16,33 @@ async def panel(request):
 
     result = []
 
+
     for item in config:
 
         entity = item.get("entity")
 
+
         if not entity:
             continue
 
+
         state = cache.get(entity)
+
 
         if state is None:
             continue
+
 
         attributes = state.get(
             "attributes",
             {}
         )
 
+
         domain = entity.split(".")[0]
 
-        result.append({
+
+        data = {
 
             "entity": entity,
 
@@ -68,6 +75,33 @@ async def panel(request):
                 "icon",
                 ""
             )
-        })
+
+        }
+
+
+        # -------- MEDIA PLAYER --------
+
+        if domain == "media_player":
+
+            data["volume"] = attributes.get(
+                "volume_level",
+                0
+            )
+
+
+            data["media_title"] = attributes.get(
+                "media_title",
+                ""
+            )
+
+
+            data["media_artist"] = attributes.get(
+                "media_artist",
+                ""
+            )
+
+
+        result.append(data)
+
 
     return web.json_response(result)
