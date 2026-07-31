@@ -14,7 +14,9 @@ body {
     font-family: Arial, sans-serif;
 
     font-size: 16px;
+
 }
+
 
 
 /* ---------- HEADER ---------- */
@@ -38,28 +40,21 @@ body {
     gap: 50px;
 
 
-    min-height: 60px;
-
-
-    border-radius: 8px;
+    min-height: 56px;
 
 
     background: #ffffff;
 
-
     border: 1px solid #dddddd;
+
+    border-radius: 8px;
 
 
     color: #222222;
 
-
-    font-size: 32px;
-
+    font-size: 30px;
 
     font-weight: bold;
-
-
-    margin-bottom: 8px;
 
 }
 
@@ -79,13 +74,13 @@ body {
     grid-template-columns: repeat(2, 1fr);
 
 
-    gap: 8px;
+    gap: 6px;
 
 }
 
 
 
-/* ---------- CARDS ---------- */
+/* ---------- ENTITY CARD ---------- */
 
 
 .row {
@@ -93,16 +88,16 @@ body {
     display: flex;
 
 
-    flex-direction: column;
-
-
-    justify-content: center;
+    flex-direction: row;
 
 
     align-items: center;
 
 
-    min-height: 90px;
+    justify-content: space-between;
+
+
+    min-height: 52px;
 
 
     padding: 8px;
@@ -111,15 +106,16 @@ body {
     margin: 0;
 
 
-    border-radius: 8px;
-
-
     background: #ffffff;
 
 
     border: 1px solid #dddddd;
 
+
+    border-radius: 8px;
+
 }
+
 
 
 /* ---------- TITLE ---------- */
@@ -127,18 +123,23 @@ body {
 
 .title {
 
-    width: 100%;
-
-
-    text-align: center;
+    flex: 1;
 
 
     font-weight: bold;
 
 
-    margin-bottom: 8px;
+    white-space: nowrap;
+
+
+    overflow: hidden;
+
+
+    text-overflow: ellipsis;
+
 
 }
+
 
 
 /* ---------- VALUE ---------- */
@@ -146,10 +147,14 @@ body {
 
 .value {
 
+    margin-left: 10px;
+
+
     color: #666666;
 
 
-    font-size: 18px;
+    font-size: 16px;
+
 
 }
 
@@ -160,13 +165,16 @@ body {
 
 button {
 
-    min-width: 80px;
+    min-width: 60px;
 
 
-    min-height: 42px;
+    min-height: 38px;
 
 
-    padding: 4px 10px;
+    padding: 4px 8px;
+
+
+    margin-left: 4px;
 
 
     border-radius: 6px;
@@ -181,7 +189,7 @@ button {
     color: #222222;
 
 
-    font-size: 16px;
+    font-size: 15px;
 
 }
 
@@ -195,6 +203,17 @@ button:active {
 
 
 
+/* ---------- ACTIVE STATE ---------- */
+
+
+.active {
+
+    border-color: #888888;
+
+}
+
+
+
 /* ---------- MEDIA PLAYER ---------- */
 
 
@@ -202,35 +221,14 @@ button:active {
 
     grid-column: span 2;
 
-}
 
-
-/* ---------- SMALL SCREENS ---------- */
-
-
-@media (max-width: 600px) {
-
-
-    #panel {
-
-        grid-template-columns: 1fr;
-
-    }
-
-
-    .media-player {
-
-        grid-column: span 1;
-
-    }
-
-
-    .header-card {
-
-        font-size: 26px;
-
-        gap: 25px;
-
-    }
+    min-height: 60px;
 
 }
+
+
+
+/* ---------- MOBILE / TABLET ---------- */
+
+
+/* Всегда две колонки */
