@@ -16,3 +16,5 @@ DEFAULT_PANEL = "home"
 
 # Refresh interval (seconds)
 DEFAULT_REFRESH = 5
+
+WEATHER_ENTITY = "weather.forecast_dom"
