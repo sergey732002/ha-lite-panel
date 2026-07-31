@@ -6,71 +6,47 @@ import ha
 SERVICE_MAP = {
 
     "light": {
-
         "toggle": "toggle",
-
         "on": "turn_on",
-
         "off": "turn_off"
-
     },
 
 
     "switch": {
-
         "toggle": "toggle",
-
         "on": "turn_on",
-
         "off": "turn_off"
-
     },
 
 
     "fan": {
-
         "toggle": "toggle",
-
         "on": "turn_on",
-
         "off": "turn_off"
-
     },
 
 
     "input_boolean": {
-
         "toggle": "toggle",
-
         "on": "turn_on",
-
         "off": "turn_off"
-
     },
 
 
     "cover": {
-
         "open": "open_cover",
-
         "close": "close_cover",
-
         "stop": "stop_cover"
-
     },
 
 
     "scene": {
-
         "activate": "turn_on"
-
     },
 
 
     "script": {
-
         "run": "turn_on"
-
     },
 
 
@@ -80,12 +56,10 @@ SERVICE_MAP = {
 
         "pause": "media_pause",
 
-        "stop": "media_stop",
-
         "next": "media_next_track"
 
     }
-    
+
 }
 
 
@@ -149,60 +123,59 @@ async def service(request):
 
         domain == "media_player"
 
-        and action == "volume_set"
+        and action in (
+
+            "volume_up",
+
+            "volume_down"
+
+        )
 
     ):
 
 
-        volume = data.get(
-            "volume"
+        current = data.get(
+            "volume",
+            0.5
         )
-
-
-
-        if volume is None:
-
-            return web.json_response(
-
-                {
-                    "success": False
-                },
-
-                status=400
-
-            )
-
 
 
         try:
 
-            volume = float(
-                volume
+            current = float(
+                current
             )
-
 
         except Exception:
 
-            return web.json_response(
-
-                {
-                    "success": False
-                },
-
-                status=400
-
-            )
+            current = 0.5
 
 
 
-        if volume < 0:
-
-            volume = 0
+        step = 0.05
 
 
-        if volume > 1:
 
-            volume = 1
+        if action == "volume_up":
+
+            current += step
+
+
+        else:
+
+            current -= step
+
+
+
+        if current < 0:
+
+            current = 0
+
+
+
+        if current > 1:
+
+            current = 1
 
 
 
@@ -216,7 +189,7 @@ async def service(request):
 
             {
 
-                "volume_level": volume
+                "volume_level": current
 
             }
 
@@ -237,9 +210,8 @@ async def service(request):
 
 
     # -------------------------
-    # OTHER SERVICES
+    # MEDIA PLAYER OTHER
     # -------------------------
-
 
     if domain not in SERVICE_MAP:
 
