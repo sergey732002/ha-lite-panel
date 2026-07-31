@@ -1,12 +1,5 @@
 from aiohttp import web
 
-import os
-import sys
-
-print("cwd =", os.getcwd())
-print("sys.path =", sys.path)
-print("files =", os.listdir("."))
-
 import asyncio
 import cache
 
@@ -14,7 +7,11 @@ from api.entities import entities
 from api.panel import panel
 from api.state import state
 from api.service import service
-from api.config import load_config, save_config
+from api.config import (
+    load_config,
+    save_config,
+    delete_config
+)
 
 from web.index import index
 from web.config import config_page
@@ -27,7 +24,10 @@ app = web.Application()
 
 # ---------- WEB ----------
 
-app.router.add_get("/", index)
+app.router.add_get(
+    "/",
+    index
+)
 
 app.router.add_get(
     "/config",
@@ -65,6 +65,11 @@ app.router.add_get(
 app.router.add_post(
     "/api/config",
     save_config
+)
+
+app.router.add_post(
+    "/api/delete",
+    delete_config
 )
 
 
