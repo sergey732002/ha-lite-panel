@@ -58,3 +58,29 @@ button {
 
     font-size: 18px;
 }
+
+.header-card {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 50px;
+
+    min-height: 60px;
+
+    margin-bottom: 8px;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    border: 1px solid #dddddd;
+
+    font-size: 32px;
+
+    font-weight: bold;
+
+}
