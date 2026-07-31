@@ -4,6 +4,17 @@ var Render = {
 
     container: null,
 
+    icons: {
+        sensor: "🌡",
+        binary_sensor: "📟",
+        switch: "🔌",
+        light: "💡",
+        fan: "🌀",
+        cover: "🚪",
+        climate: "❄",
+        media_player: "🎵"
+    },
+
     init: function () {
 
         this.container =
@@ -21,28 +32,22 @@ var Render = {
                 action: action
             },
             function () {
-
-                setTimeout(
-                    loadPanel,
-                    500
-                );
+                setTimeout(loadPanel, 500);
             }
         );
     },
 
     addButton: function (
         row,
-        title,
+        text,
         entity,
         action
     ) {
 
         var button =
-            document.createElement(
-                "button"
-            );
+            document.createElement("button");
 
-        button.innerHTML = title;
+        button.innerHTML = text;
 
         button.onclick = function () {
 
@@ -53,6 +58,24 @@ var Render = {
         };
 
         row.appendChild(button);
+    },
+
+    renderValue: function (
+        row,
+        item
+    ) {
+
+        var value =
+            document.createElement("div");
+
+        value.className = "value";
+
+        value.innerHTML =
+            item.state +
+            " " +
+            item.unit;
+
+        row.appendChild(value);
     },
 
     render: function (items) {
@@ -68,21 +91,27 @@ var Render = {
             }
 
             var row =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             row.className = "row";
 
+            if (
+                item.state === "on" ||
+                item.state === "open"
+            ) {
+                row.className += " active";
+            }
+
             var title =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             title.className = "title";
 
+            var icon =
+                this.icons[item.domain] || "⚙";
+
             title.innerHTML =
-                item.title;
+                icon + " " + item.title;
 
             row.appendChild(title);
 
@@ -91,21 +120,9 @@ var Render = {
                 item.domain === "binary_sensor"
             ) {
 
-                var value =
-                    document.createElement(
-                        "div"
-                    );
-
-                value.className =
-                    "value";
-
-                value.innerHTML =
-                    item.state +
-                    " " +
-                    item.unit;
-
-                row.appendChild(
-                    value
+                this.renderValue(
+                    row,
+                    item
                 );
             }
 
@@ -153,19 +170,9 @@ var Render = {
                 item.domain === "climate"
             ) {
 
-                var climate =
-                    document.createElement(
-                        "div"
-                    );
-
-                climate.className =
-                    "value";
-
-                climate.innerHTML =
-                    item.state;
-
-                row.appendChild(
-                    climate
+                this.renderValue(
+                    row,
+                    item
                 );
             }
 
