@@ -15,14 +15,11 @@ var Render = {
     action: function (entity, action) {
 
         API.post(
-
             "/api/service",
-
             {
                 entity: entity,
                 action: action
             },
-
             function () {
 
                 setTimeout(
@@ -33,41 +30,29 @@ var Render = {
         );
     },
 
-    renderButton: function (row, item) {
+    addButton: function (
+        row,
+        title,
+        entity,
+        action
+    ) {
 
         var button =
             document.createElement(
                 "button"
             );
 
-        button.innerHTML = "Переключить";
+        button.innerHTML = title;
 
         button.onclick = function () {
 
             Render.action(
-                item.entity,
-                "toggle"
+                entity,
+                action
             );
         };
 
         row.appendChild(button);
-    },
-
-    renderValue: function (row, item) {
-
-        var value =
-            document.createElement(
-                "div"
-            );
-
-        value.className = "value";
-
-        value.innerHTML =
-            item.state +
-            " " +
-            item.unit;
-
-        row.appendChild(value);
     },
 
     render: function (items) {
@@ -102,21 +87,85 @@ var Render = {
             row.appendChild(title);
 
             if (
-                item.domain === "light" ||
+                item.domain === "sensor" ||
+                item.domain === "binary_sensor"
+            ) {
+
+                var value =
+                    document.createElement(
+                        "div"
+                    );
+
+                value.className =
+                    "value";
+
+                value.innerHTML =
+                    item.state +
+                    " " +
+                    item.unit;
+
+                row.appendChild(
+                    value
+                );
+            }
+
+            if (
                 item.domain === "switch" ||
+                item.domain === "light" ||
                 item.domain === "fan"
             ) {
 
-                this.renderButton(
+                this.addButton(
                     row,
-                    item
+                    item.state,
+                    item.entity,
+                    "toggle"
+                );
+            }
+
+            if (
+                item.domain === "cover"
+            ) {
+
+                this.addButton(
+                    row,
+                    "▲",
+                    item.entity,
+                    "open"
                 );
 
-            } else {
-
-                this.renderValue(
+                this.addButton(
                     row,
-                    item
+                    "■",
+                    item.entity,
+                    "stop"
+                );
+
+                this.addButton(
+                    row,
+                    "▼",
+                    item.entity,
+                    "close"
+                );
+            }
+
+            if (
+                item.domain === "climate"
+            ) {
+
+                var climate =
+                    document.createElement(
+                        "div"
+                    );
+
+                climate.className =
+                    "value";
+
+                climate.innerHTML =
+                    item.state;
+
+                row.appendChild(
+                    climate
                 );
             }
 
