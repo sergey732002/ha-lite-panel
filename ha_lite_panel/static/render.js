@@ -4,13 +4,21 @@ var Render = {
 
     container: null,
 
+
     icons: {
+
         sensor: "🌡",
+
         binary_sensor: "📟",
+
         switch: "🔌",
+
         light: "💡",
+
         fan: "🌀",
+
         media_player: "🎵"
+
     },
 
 
@@ -26,17 +34,34 @@ var Render = {
 
     action: function (
         entity,
-        action
+        action,
+        extra
     ) {
+
+        var data = {
+
+            entity: entity,
+
+            action: action
+
+        };
+
+
+        if (extra) {
+
+            Object.assign(
+                data,
+                extra
+            );
+
+        }
+
 
         API.post(
 
             "/api/service",
 
-            {
-                entity: entity,
-                action: action
-            },
+            data,
 
             function () {
 
@@ -46,6 +71,7 @@ var Render = {
                 );
 
             }
+
         );
 
     },
@@ -118,8 +144,10 @@ var Render = {
         item
     ) {
 
+
         row.className +=
             " media-player";
+
 
 
         var state =
@@ -141,28 +169,107 @@ var Render = {
         );
 
 
+
         this.addButton(
+
             row,
+
             "▶",
+
             item.entity,
+
             "play"
+
         );
 
 
         this.addButton(
+
             row,
+
             "⏸",
+
             item.entity,
+
             "pause"
+
         );
 
 
         this.addButton(
+
             row,
+
             "■",
+
             item.entity,
+
             "stop"
+
         );
+
+
+
+        var volume =
+            document.createElement(
+                "input"
+            );
+
+
+        volume.type =
+            "range";
+
+
+        volume.min =
+            "0";
+
+
+        volume.max =
+            "1";
+
+
+        volume.step =
+            "0.01";
+
+
+        volume.value =
+            item.volume || 0;
+
+
+
+        volume.className =
+            "volume-slider";
+
+
+
+        volume.onchange = function () {
+
+
+            Render.action(
+
+                item.entity,
+
+                "volume_set",
+
+                {
+
+                    volume:
+                        parseFloat(
+                            volume.value
+                        )
+
+                }
+
+            );
+
+
+        };
+
+
+        row.appendChild(
+            volume
+        );
+
 
     },
 
@@ -171,8 +278,10 @@ var Render = {
         items
     ) {
 
+
         this.container.innerHTML =
             "";
+
 
 
         for (
@@ -186,11 +295,13 @@ var Render = {
                 items[i];
 
 
+
             if (!item.visible) {
 
                 continue;
 
             }
+
 
 
             var row =
@@ -214,16 +325,19 @@ var Render = {
                 "title";
 
 
+
             var icon =
                 this.icons[item.domain]
                 ||
                 "⚙";
 
 
+
             title.innerHTML =
                 icon +
                 " " +
                 item.title;
+
 
 
             row.appendChild(
@@ -233,8 +347,13 @@ var Render = {
 
 
             if (
-                item.domain === "sensor" ||
+
+                item.domain === "sensor"
+
+                ||
+
                 item.domain === "binary_sensor"
+
             ) {
 
 
@@ -247,44 +366,68 @@ var Render = {
             }
 
 
+
             if (
-                item.domain === "switch" ||
-                item.domain === "light" ||
+
+                item.domain === "switch"
+
+                ||
+
+                item.domain === "light"
+
+                ||
+
                 item.domain === "fan"
+
             ) {
 
 
                 this.addButton(
+
                     row,
+
                     item.state,
+
                     item.entity,
+
                     "toggle"
+
                 );
 
 
             }
 
 
+
             if (
+
                 item.domain === "media_player"
+
             ) {
 
 
                 this.renderMediaPlayer(
+
                     row,
+
                     item
+
                 );
 
 
             }
+
 
 
             this.container.appendChild(
                 row
             );
 
+
         }
 
+
     }
+
 
 };
