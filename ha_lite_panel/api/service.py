@@ -6,47 +6,71 @@ import ha
 SERVICE_MAP = {
 
     "light": {
+
         "toggle": "toggle",
+
         "on": "turn_on",
+
         "off": "turn_off"
+
     },
 
 
     "switch": {
+
         "toggle": "toggle",
+
         "on": "turn_on",
+
         "off": "turn_off"
+
     },
 
 
     "fan": {
+
         "toggle": "toggle",
+
         "on": "turn_on",
+
         "off": "turn_off"
+
     },
 
 
     "input_boolean": {
+
         "toggle": "toggle",
+
         "on": "turn_on",
+
         "off": "turn_off"
+
     },
 
 
     "cover": {
+
         "open": "open_cover",
+
         "close": "close_cover",
+
         "stop": "stop_cover"
+
     },
 
 
     "scene": {
+
         "activate": "turn_on"
+
     },
 
 
     "script": {
+
         "run": "turn_on"
+
     },
 
 
@@ -61,6 +85,8 @@ SERVICE_MAP = {
     }
 
 }
+
+
 
 
 
@@ -84,9 +110,15 @@ async def service(request):
         )
 
 
-    entity = data.get("entity")
 
-    action = data.get("action")
+    entity = data.get(
+        "entity"
+    )
+
+    action = data.get(
+        "action"
+    )
+
 
 
     if not entity or not action:
@@ -102,11 +134,14 @@ async def service(request):
         )
 
 
+
     domain = entity.split(".")[0]
 
 
 
-    # ---------- MEDIA PLAYER VOLUME ----------
+    # -------------------------
+    # MEDIA PLAYER VOLUME
+    # -------------------------
 
     if (
 
@@ -122,6 +157,7 @@ async def service(request):
         )
 
 
+
         if volume is None:
 
             return web.json_response(
@@ -133,6 +169,39 @@ async def service(request):
                 status=400
 
             )
+
+
+
+        try:
+
+            volume = float(
+                volume
+            )
+
+
+        except Exception:
+
+            return web.json_response(
+
+                {
+                    "success": False
+                },
+
+                status=400
+
+            )
+
+
+
+        if volume < 0:
+
+            volume = 0
+
+
+        if volume > 1:
+
+            volume = 1
+
 
 
         result = await ha.call_service(
@@ -152,6 +221,7 @@ async def service(request):
         )
 
 
+
         return web.json_response(
 
             {
@@ -160,6 +230,13 @@ async def service(request):
 
         )
 
+
+
+
+
+    # -------------------------
+    # OTHER SERVICES
+    # -------------------------
 
 
     if domain not in SERVICE_MAP:
@@ -201,6 +278,7 @@ async def service(request):
         entity
 
     )
+
 
 
     return web.json_response(
