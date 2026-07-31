@@ -6,8 +6,9 @@ body {
 
 body {
     background: #202020;
-    color: white;
+    color: #ffffff;
     font-family: Arial, sans-serif;
+    font-size: 20px;
 }
 
 #panel {
@@ -15,24 +16,45 @@ body {
 }
 
 .row {
-
     display: flex;
 
     justify-content: space-between;
 
     align-items: center;
 
-    min-height: 48px;
+    min-height: 64px;
 
-    padding: 10px;
+    padding: 12px;
 
-    border-bottom: 1px solid #404040;
+    margin-bottom: 6px;
+
+    border-radius: 8px;
+
+    background: #303030;
 }
 
 .title {
+    flex: 1;
     font-weight: bold;
 }
 
 .value {
     color: #cccccc;
+    margin-left: 20px;
+}
+
+button {
+    min-width: 140px;
+
+    min-height: 48px;
+
+    border: none;
+
+    border-radius: 6px;
+
+    background: #505050;
+
+    color: #ffffff;
+
+    font-size: 18px;
 }
