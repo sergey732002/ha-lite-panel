@@ -7,6 +7,7 @@ from api.entities import entities
 from api.panel import panel
 from api.state import state
 from api.service import service
+from api.header import header
 
 from api.config import (
     load_config,
@@ -91,6 +92,10 @@ app.router.add_post(
     rename_entity
 )
 
+app.router.add_get(
+    "/api/header",
+    header
+)
 
 # ---------- STATIC ----------
 
