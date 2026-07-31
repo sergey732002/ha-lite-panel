@@ -33,6 +33,8 @@ async def panel(request):
             {}
         )
 
+        domain = entity.split(".")[0]
+
         result.append({
 
             "entity": entity,
@@ -50,7 +52,7 @@ async def panel(request):
                 True
             ),
 
-            "domain": entity.split(".")[0],
+            "domain": domain,
 
             "state": state.get(
                 "state",
@@ -60,8 +62,12 @@ async def panel(request):
             "unit": attributes.get(
                 "unit_of_measurement",
                 ""
-            )
+            ),
 
+            "icon": attributes.get(
+                "icon",
+                ""
+            )
         })
 
     return web.json_response(result)
