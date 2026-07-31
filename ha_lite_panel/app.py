@@ -7,10 +7,13 @@ from api.entities import entities
 from api.panel import panel
 from api.state import state
 from api.service import service
+
 from api.config import (
     load_config,
     save_config,
-    delete_config
+    delete_config,
+    move_up,
+    move_down
 )
 
 from web.index import index
@@ -70,6 +73,16 @@ app.router.add_post(
 app.router.add_post(
     "/api/delete",
     delete_config
+)
+
+app.router.add_post(
+    "/api/move_up",
+    move_up
+)
+
+app.router.add_post(
+    "/api/move_down",
+    move_down
 )
 
 
