@@ -80,10 +80,12 @@ SERVICE_MAP = {
 
         "pause": "media_pause",
 
-        "stop": "media_stop"
+        "stop": "media_stop",
+
+        "next": "media_next_track"
 
     }
-
+    
 }
 
 
